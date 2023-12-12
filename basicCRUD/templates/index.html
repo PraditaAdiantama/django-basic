@@ -1,0 +1,62 @@
+{% extends "layout.html" %} 
+{% block content %}
+<div class="d-flex flex-column mt-5 align-items-center gap-2">
+  <div class="d-flex justify-content-between w-50">
+    <h3>CRUD Sederhana</h3>
+    <!-- Button trigger modal -->
+<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
+  Tambah
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="{% url "store" %}" method="POST" id="student-add">
+          {% csrf_token %}
+          <label for="nis" class="form-label">Nis</label>
+          <input id="nis" type="number" name="nis" class="form-control">
+          <label for="name" class="form-label">Nama</label>
+          <input id="name" type="text" name="name" class="form-control">
+          <label for="address" class="form-label">Alamat</label>
+          <textarea name="address" id="address" cols="30" rows="5" class="form-control"></textarea>
+          <label for="birth-date" class="form-label">Tanggal Lahir</label>
+          <input type="date" id="birth-date" name="birth_date" class="form-control">
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-success" form="student-add">Tambah</button>
+      </div>
+    </div>
+  </div>
+</div>
+  </div>
+  <table class="table w-50">
+    <thead>
+      <tr>
+        <th class="bg-primary text-white rounded-start">Nis</th>
+        <th class="bg-primary text-white">Nama</th>
+        <th class="bg-primary text-white rounded-end">Aksi</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for student in students %}
+      <tr>
+        <td>{{student.nis}}</td>
+        <td>{{student.name}}</td>
+        <td class="d-flex gap-2">
+            <a href="{% url "show" student.id %}" class="btn btn-primary">Detail</a>
+            <a href="{% url "delete" student.id %}" class="btn btn-danger">Delete</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

@@ -1,0 +1,58 @@
+{% extends "layout.html" %} {% block content %}
+<div class="d-flex flex-column mt-5 align-items-center gap-2">
+  <h3>CRUD Sederhana</h3>
+  <table class="table w-50">
+    <thead>
+      <tr>
+        <th class="bg-primary text-white rounded-start">Nis</th>
+        <th class="bg-primary text-white">Nama</th>
+        <th class="bg-primary text-white">Alamat</th>
+        <th class="bg-primary text-white">Tanggal Lahir</th>
+        <th class="bg-primary text-white rounded-end">Aksi</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>{{student.nis}}</td>
+        <td>{{student.name}}</td>
+        <td>{{student.address}}</td>
+        <td>{{student.birth_date}}</td>
+        <td>
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            Update
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="{% url "update" student.id %}" method="POST" id="student-add">
+          {% csrf_token %}
+          <label for="nis" class="form-label">Nis</label>
+          <input id="nis" type="number" value="{{student.nis}}" name="nis" class="form-control">
+          <label for="name" class="form-label">Nama</label>
+          <input id="name" type="text" name="name" value="{{student.name}}" class="form-control">
+          <label for="address" class="form-label">Alamat</label>
+          <textarea name="address" id="address" cols="30" rows="5" class="form-control">{{student.address}}</textarea>
+          <label for="birth-date" class="form-label">Tanggal Lahir</label>
+          <input type="date" id="birth-date" name="birth_date" value="{{student.birth_date|date:"Y-m-d"}}" class="form-control">
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary" form="student-add">Update</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}
